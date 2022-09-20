@@ -16,6 +16,8 @@ hands = mpHands.Hands( # Alla inställningar nedan är standard men ville att vi
 
 mpDraw = mp.solutions.drawing_utils # Module som används för att rita upp händerna
 
+print("Jack gay")
+
 previous_time = time.time() # används senare för att beräkna fps
 
 while True: # Runnar tills man stänger ner programmet
