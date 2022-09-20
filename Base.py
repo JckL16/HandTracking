@@ -27,8 +27,8 @@ while True: # Runnar tills man stänger ner programmet
 
     if results.multi_hand_landmarks: # Kollar om den faktiskt hittar några händer. Om inte ger den None
         for hand in results.multi_hand_landmarks: # Om det är fler händer som detectas så måste båda dessa ritas upp
-            for id, landmark in enumerate(hand-landmark): # Id = vilket id en viss punkt på handen har, landmark är vart den är i bilden i form av en ratio, x = 0.5 => xkord = screenwidth*0.5
-                screenHeight, screenWidth, _ = image.shape # Ger storleken på den bild som kameran tar
+            for id, landmark in enumerate(hand.landmark): # Id = vilket id en viss punkt på handen har, landmark är vart den är i bilden i form av en ratio, x = 0.5 => xkord = screenwidth*0.5
+                screenHeight, screenWidth, _ = img.shape # Ger storleken på den bild som kameran tar
                 pointx = int(landmark.x*screenWidth) # Ger pixel positionen för den nuvarande landmarken som beräknas
                 pointy = int(landmark.y*screenHeight)
             mpDraw.draw_landmarks(img, hand, mpHands.HAND_CONNECTIONS) # Ritar landmarks för vissa punkter på varje hand, samt streck mellan dem
