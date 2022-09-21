@@ -34,10 +34,10 @@ class handDetector():
         if self.results.multi_hand_landmarks:
             for index, hand in enumerate(self.results.multi_hand_landmarks):
                 landmark_list.append([])
-                for landmark in hand.landmark:
+                for nr, landmark in enumerate(hand.landmark):
                     pointx = int(landmark.x*screenWidth)
                     pointy = int(landmark.y*screenHeight)
-                    landmark_list[index].append([pointx, pointy])
+                    landmark_list[index].append([nr, pointx, pointy])
 
         return landmark_list
 
