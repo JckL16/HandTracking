@@ -25,9 +25,8 @@ class handDetector():
 
         return img
 
-    def getPositions(self, img): # Om man vill ha exakt vart på skärmen olika landmarks är kan man använda denna funktion
+    def getPositions(self): # Om man vill ha exakt vart på skärmen olika landmarks är kan man använda denna funktion
         landmark_list = []
-        screenHeight, screenWidth, _ = img.shape
 
         # Hela detta block skapar en lista med positioner för alla landmarks på x antal händer
         # Så landmark nummer y (se bild) på hand x hamnar i listans index [x][y]
@@ -35,9 +34,7 @@ class handDetector():
             for index, hand in enumerate(self.results.multi_hand_landmarks):
                 landmark_list.append([])
                 for nr, landmark in enumerate(hand.landmark):
-                    pointx = int(landmark.x*screenWidth)
-                    pointy = int(landmark.y*screenHeight)
-                    landmark_list[index].append([nr, pointx, pointy])
+                    landmark_list[index].append([nr, landmark.x, landmark.y])
 
         return landmark_list
 
@@ -50,7 +47,7 @@ def main():
 
         img = detector.findHands(img)
 
-        landmarks = detector.getPositions(img)
+        landmarks = detector.getPositions()
         if len(landmarks) != 0: # Dubbelkollar att den faktiskt hittar en eller flera händer
             pass # Gör vad som vill göras med infon
 
