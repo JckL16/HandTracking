@@ -12,6 +12,13 @@ lid={ #Landmark ID
     "MTip": 12,
     "RTip": 16,
     "PTip": 20,
+    #pips
+    "TPip": 2,
+    "IPip": 6,
+    "MPip": 10,
+    "RPip": 14,
+    "PPip": 18,
+    
 
 }
 
@@ -26,11 +33,20 @@ while True:
     landmarks = detector.getPositions(img)
     if len(landmarks) != 0: # Dubbelkollar att den faktiskt hittar en eller flera händer
 
-        #print(landmarks[0][::4])
-        if all(i[y] >= landmarks[0][lid["TTip"]][y] for i in (landmarks[0][::4])):
+        #Tummen upp
+        '''if all(i[y] >= landmarks[0][lid["TTip"]][y] for i in (landmarks[0][::4])):
             print("Thumbs up")
         else:
-            print("NO")
+            print("NO")'''
+        
+        print(landmarks[0][2::4][y], landmarks[0][lid["TTip"]][y])
+
+        #1
+        if all(j[::4][y] >= landmarks[0][2::4][y] for j in (landmarks[0])):
+            print("1")
+        else:
+            print("Nope")
+
 
         
 
