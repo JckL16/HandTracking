@@ -31,7 +31,10 @@ while True: # Runnar tills man stänger ner programmet
                 screenHeight, screenWidth, _ = img.shape # Ger storleken på den bild som kameran tar
                 pointx = int(landmark.x*screenWidth) # Ger pixel positionen för den nuvarande landmarken som beräknas
                 pointy = int(landmark.y*screenHeight)
+                print(pointx,pointy)
             mpDraw.draw_landmarks(img, hand, mpHands.HAND_CONNECTIONS) # Ritar landmarks för vissa punkter på varje hand, samt streck mellan dem
+
+    print(results)
 
     # För att beräkna fps
     fps = 1/(time.time()-previous_time)
