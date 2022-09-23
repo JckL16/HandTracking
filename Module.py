@@ -13,7 +13,7 @@ class handDetector():
             min_tracking_confidence=tracking_confidence)
         self.mpDraw = mp.solutions.drawing_utils
 
-    def findHands(self, img, draw = True): #Hittar och, om man vill, ritar vart alla landmarks är
+    def findHands(self, img, draw = True): # Hittar och, om man vill, ritar vart alla landmarks är
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
         self.results = self.hands.process(imgRGB)

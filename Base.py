@@ -44,4 +44,5 @@ while True: # Runnar tills man stänger ner programmet
 
     cv2.imshow("Image", img) # Visar bilden som capturas ovan i ett fönster med titel Image
 
-    cv2.waitKey(1) # Visar en frame i minst 1 ms, relevant antar jag
+    if cv2.waitKey(1) == 27: # Om man trycker på esc stäng programmet
+        break
