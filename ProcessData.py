@@ -3,7 +3,7 @@ import cv2
 import os
 
 
-path = r"D:/SignLanguageDataset/Numbers/L" # Directory till mappen med fler mappar för varje bokstav/tecken/siffra
+path = r"D:/SignLanguageDataset/Numbers/R" # Directory till mappen med fler mappar för varje bokstav/tecken/siffra
 newPath = r"D:\SignLanguageDataset\NumbersProcessed"
 
 dir_list = [x[0] for x in os.walk(path)][1:] # Skaffar en lista på alla mappar i directoryn, första är startdirectory så den behöver den inte kolla på

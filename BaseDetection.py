@@ -23,7 +23,7 @@ while True:
 
     img = detector.findHands(img)
 
-    landmarks = detector.getPositions(img)
+    landmarks = detector.getPositions()
     if len(landmarks) != 0: # Dubbelkollar att den faktiskt hittar en eller flera händer
 
         #print(landmarks[0][::4])
@@ -32,7 +32,7 @@ while True:
         else:
             print("NO")
 
-        
+
 
     cv2.imshow("Image", img)
 
