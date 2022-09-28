@@ -30,7 +30,7 @@ while True:
 
     img = detector.findHands(img)
 
-    landmarks = detector.getPositions(img)
+    landmarks = detector.getPositions()
     if len(landmarks) != 0: # Dubbelkollar att den faktiskt hittar en eller flera händer
 
         #Tummen upp
@@ -39,13 +39,24 @@ while True:
         else:
             print("NO")'''
         
-        print(landmarks[0][2::4][y], landmarks[0][lid["TTip"]][y])
+        #print(landmarks[0][2::4][y], landmarks[0][lid["TTip"]][y])
 
+        #print(landmarks[0][2::4])
+        #print(landmarks[0][0::4][1:])
+        
+        '''for j in (landmarks[0][::4][1:]):
+            print(type(landmarks[0][2::4][y]))'''
+
+        '''print(range(2,18,4))
+        for i in range(2,19,4):
+            print(i)'''
         #1
-        if all(j[::4][y] >= landmarks[0][2::4][y] for j in (landmarks[0])):
-            print("1")
-        else:
-            print("Nope")
+        print(type(landmarks[0][j][y] <= landmarks[0][j+2][y] for j in range(2,19,4)))
+        '''count = 0
+        if (landmarks[0][j][y] <= landmarks[0][j+2][y] for j in range(2,19,4)):
+            count += 1
+        print(count)'''
+
 
 
         
