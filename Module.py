@@ -53,7 +53,8 @@ def main():
 
         cv2.imshow("Image", img)
 
-        cv2.waitKey(1)
+        if cv2.waitKey(1) == 27:
+            break
 
 if __name__ == "__main__":
     main()

@@ -59,7 +59,7 @@ while True:
 
 
 
-        
+
 
     cv2.imshow("Image", img)
 
