@@ -51,7 +51,12 @@ while True:
         for i in range(2,19,4):
             print(i)'''
         #1
-        print(type(landmarks[0][j][y] <= landmarks[0][j+2][y] for j in range(2,19,4)))
+        count = 0
+        for j in range(2,19,4):
+            if landmarks[0][j][y] >= landmarks[0][j+2][y]:
+                count += 1
+        print(count)
+        #print(type(landmarks[0][j][y] <= landmarks[0][j+2][y] for j in range(2,19,4)))
         '''count = 0
         if (landmarks[0][j][y] <= landmarks[0][j+2][y] for j in range(2,19,4)):
             count += 1
