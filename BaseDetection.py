@@ -1,5 +1,6 @@
 import Module as m
 import cv2
+import math
 
 cap = cv2.VideoCapture(0)
 detector = m.handDetector()
@@ -39,29 +40,32 @@ while True:
         else:
             print("NO")'''
         
-        #print(landmarks[0][2::4][y], landmarks[0][lid["TTip"]][y])
+        # abs(landmarks[0][lid["ITip"]][y] - landmarks[0][lid["IPip"]][y]) > moe
 
-        #print(landmarks[0][2::4])
-        #print(landmarks[0][0::4][1:])
-        
-        '''for j in (landmarks[0][::4][1:]):
-            print(type(landmarks[0][2::4][y]))'''
+        moe = math.pi/4 #Margin of error
+        dxI = landmarks[0][lid["ITip"]][x] - landmarks[0][lid["IPip"]][x]
+        dyI = landmarks[0][lid["ITip"]][y] - landmarks[0][lid["IPip"]][y]
+        dxP = landmarks[0][lid["PTip"]][x] - landmarks[0][lid["PPip"]][x]
+        dyP = landmarks[0][lid["PTip"]][y] - landmarks[0][lid["PPip"]][y]
+        dxM = landmarks[0][lid["MTip"]][x] - landmarks[0][lid["MPip"]][x]
+        dyM = landmarks[0][lid["MTip"]][y] - landmarks[0][lid["MPip"]][y]
+        dxR = landmarks[0][lid["RTip"]][x] - landmarks[0][lid["RPip"]][x]
+        dyR = landmarks[0][lid["RTip"]][y] - landmarks[0][lid["RPip"]][y]
+        states = [
+            dyI < 0 and abs(dyI) >= abs(dxI), # index_up
+            dyP < 0 and abs(dyP) >= abs(dxP), # pinky_up 
+            dyR < 0 and abs(dyR) >= abs(dxR), # ring_up 
+            dyM < 0 and abs(dyM) >= abs(dxM) # middle_up
+        ]
 
-        '''print(range(2,18,4))
-        for i in range(2,19,4):
-            print(i)'''
+        print(states[:4].count(True))
+
         #1
-        count = 0
+        '''count = 0
         for j in range(2,19,4):
             if landmarks[0][j][y] >= landmarks[0][j+2][y]:
                 count += 1
-        print(count)
-        #print(type(landmarks[0][j][y] <= landmarks[0][j+2][y] for j in range(2,19,4)))
-        '''count = 0
-        if (landmarks[0][j][y] <= landmarks[0][j+2][y] for j in range(2,19,4)):
-            count += 1
         print(count)'''
-
 
 
 
