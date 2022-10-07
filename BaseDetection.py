@@ -5,6 +5,8 @@ import math
 cap = cv2.VideoCapture(0)
 detector = m.handDetector()
 
+print("Started")
+
 lid={ #Landmark ID
     "W": 0,
     #Fingertips
