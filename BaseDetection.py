@@ -5,8 +5,6 @@ import math
 cap = cv2.VideoCapture(0)
 detector = m.handDetector()
 
-print("Started")
-
 lid={ #Landmark ID
     "W": 0,
     #Fingertips
@@ -57,48 +55,56 @@ while True:
         dyR = landmarks[0][lid["RTip"]][y] - landmarks[0][lid["RPip"]][y]
         
         states = [
-            dyI < 0 and abs(dyI) >= abs(dxI), # index up
-            dyP < 0 and abs(dyP) >= abs(dxP), # pinky up 
-            dyR < 0 and abs(dyR) >= abs(dxR), # ring up 
-            dyM < 0 and abs(dyM) >= abs(dxM), # middle up
-            dyT < 0 and abs(dyT)*0.5 >= abs(dxT), # thumb up
-            dxI > 0 and abs(dyI)/moe < abs(dxI), # index  right
-            dxI < 0 and abs(dyI)/moe < abs(dxI), # index left
-            dxP > 0 and abs(dyP)/moe < abs(dxP), # pinky right
-            dxP < 0 and abs(dyP)/moe < abs(dxP), # pinky left
-            dxR > 0 and abs(dyR)/moe < abs(dxR), # ring right
-            dxR < 0 and abs(dyR)/moe < abs(dxR), # ring left
-            dxM > 0 and abs(dyM)/moe < abs(dxM), # middle  right
-            dxM < 0 and abs(dyM)/moe < abs(dxM), # middle left
-            dxT > 0 and abs(dyT)/moe < abs(dxT), # thumb right
-            dxT < 0 and abs(dyT)/moe < abs(dxT)  # thumb left
+            dyI < 0 and abs(dyI) >= abs(dxI), # index up         [0]
+            dyP < 0 and abs(dyP) >= abs(dxP), # pinky up         [1]
+            dyR < 0 and abs(dyR) >= abs(dxR), # ring up          [2]
+            dyM < 0 and abs(dyM) >= abs(dxM), # middle up        [3]
+            dyT < 0 and abs(dyT)*0.5 >= abs(dxT), # thumb up     [4]
+            dxI > 0 and abs(dyI)/moe < abs(dxI), # index  right  [5]
+            dxI < 0 and abs(dyI)/moe < abs(dxI), # index left    [6]
+            dxP > 0 and abs(dyP)/moe < abs(dxP), # pinky right   [7]
+            dxP < 0 and abs(dyP)/moe < abs(dxP), # pinky left    [8]
+            dxR > 0 and abs(dyR)/moe < abs(dxR), # ring right    [9]
+            dxR < 0 and abs(dyR)/moe < abs(dxR), # ring left     [10]
+            dxM > 0 and abs(dyM)/moe < abs(dxM), # middle  right [11]
+            dxM < 0 and abs(dyM)/moe < abs(dxM), # middle left   [12]
+            dxT > 0 and abs(dyT)/moe < abs(dxT), # thumb right   [13]
+            dxT < 0 and abs(dyT)/moe < abs(dxT)  # thumb left    [14]
             
 
         ]
 
-        # print(states[:5].count(True))    # Number of fingers up
-        #print(states[5::2].count(True))  # Number of fingers to the left
-        #print(states[6::2].count(True))  # Number of fingers to the right
-        # print(states[4], states[13], states[14])
+        fingers_up = states[:5].count(True)
+        fingers_left = states[5:13:2].count(True)
+        fingers_right = states[6:13:2].count(True)
 
-        if (states[5::2].count(True) >= 4 or states[6::2].count(True) >= 4) and landmarks[0][lid["TPip"]][y] < landmarks[0][lid["IPip"]][y]:
-            print("Boi")
-        elif states[0] and states[3] and states[:5].count(True) == 2:
+        if (fingers_left >= 4 or fingers_right >= 4) and landmarks[0][lid["TPip"]][y] < landmarks[0][lid["IPip"]][y]:
+            if fingers_left >= 4 and landmarks[0][lid["TPip"]][x] > landmarks[0][lid["IPip"]][x]:
+                print("Thumbs up")
+            elif fingers_right >= 4 and landmarks[0][lid["TPip"]][x] < landmarks[0][lid["IPip"]][x]:
+                print("Thumbs up")
+            else:
+                print("Boi")
+        elif states[0] and states[3] and fingers_up == 2:
             print("Peace")
-        elif states[3] and ((states[:5].count(True) == 1) or (states[13] or states[14]) or (states[4] and states[:5].count(True) == 2)):
+        elif states[3] and ((fingers_up == 1) or (states[13] or states[14]) or (states[4] and fingers_up == 2)):
             print("Fuck you")
-        elif states[4] and ((states[5] and states[5::2].count(True) == 1) or (states[6] and states[6::2].count(True) == 1)):
-            print("Pewpew")
+        elif (states[5] and fingers_left == 1) or (states[6] and fingers_right == 1):
+            if states[4]:
+                print("Pewpew")
+            else:
+                print("pointing")
+        elif states[4] and states[:4].count(True) <= 0 and fingers_left + fingers_right == 0:
+            print("A")
+        
+        elif states[4] and fingers_up == 0:
+            print("Thumbs up man")
+
         else:
-            print("Nothing")
-        #1
-        '''count = 0
-        for j in range(2,19,4):
-            if landmarks[0][j][y] >= landmarks[0][j+2][y]:
-                count += 1
-        print(count)'''
-
-
+            if fingers_up > 0:
+                print(fingers_up)
+            else:
+                print("Nothing")
 
 
     cv2.imshow("Image", img)
