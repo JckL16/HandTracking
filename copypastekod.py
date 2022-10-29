@@ -31,23 +31,26 @@ while True:
                     y_max = y
                 if y < y_min:
                     y_min = y
-            cv2.rectangle(frame, (x_min, y_min), (x_max, y_max), (0, 255, 0), 2)
-            margin = 20
-            
+            cv2.rectangle(frame, (x_min, y_min),
+                          (x_max, y_max), (0, 255, 0), 2)
+            margin = 10
+
+            goalres = (300, 400)  # width, height
+
             try:
-                hand_frame = frame[y_min-margin:y_max+margin, x_min-margin:x_max+margin]
-                height,width,_ = hand_frame.shape
+
+                hand_frame = frame[y_min-margin:y_max
+                                   + margin, x_min-margin:x_max+margin]
+                height, width, _ = hand_frame.shape
 
                 hand_frame = cv2.resize(hand_frame, (300, 300))
 
                 cv2.imshow("picture", hand_frame)
             except:
-                continue
+                print("Something went wrong")
 
-            
             mp_drawing.draw_landmarks(frame, handLMs, mphands.HAND_CONNECTIONS)
     cv2.imshow("Frame", frame)
-
 
     if cv2.waitKey(1) == ord("q"):
         break
