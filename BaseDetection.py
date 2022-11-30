@@ -105,7 +105,7 @@ while True:
                 print(fingers_up)
             else:
                 print("Nothing")
-
+   
 
     cv2.imshow("Image", img)
 
