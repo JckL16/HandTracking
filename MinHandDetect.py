@@ -44,7 +44,7 @@ while True:
                 new_poses = []
 
                 for index in used_landmarks:
-                    new_poses.append([index, round((int(current_hand[index][1] * w) - x_min) / width, decimal_precision), round((int(current_hand[index][2]*h) - y_min) / height, v)])
+                    new_poses.append([index, round((int(current_hand[index][1] * w) - x_min) / width, decimal_precision), round((int(current_hand[index][2]*h) - y_min) / height, decimal_precision)])
 
                 for row in new_poses:
                     print(row)
