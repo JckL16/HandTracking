@@ -1,4 +1,3 @@
-from re import X
 import Module
 import cv2
 
@@ -10,8 +9,14 @@ used_landmarks = [0, 2, 4, 5, 8, 9, 12, 13, 16, 17, 20]
 
 decimal_precision = 7
 
+read_path = "Bilder"
+
+write_path = "Data.txt"
+
+file = open(write_path, "a")
+
 while True:
-    _, img=cap.read()
+    _, img = cap.read()
 
     h, w, _ = img.shape
 
@@ -44,13 +49,15 @@ while True:
                 new_poses = []
 
                 for index in used_landmarks:
-                    new_poses.append([index, round((int(current_hand[index][1] * w) - x_min) / width, decimal_precision), round((int(current_hand[index][2]*h) - y_min) / height, decimal_precision)])
+                    # new_poses.append([index, round((int(current_hand[index][1] * w) - x_min) / width, decimal_precision), round((int(current_hand[index][2]*h) - y_min) / height, decimal_precision)])
+                    new_poses.append((round((int(current_hand[index][1] * w) - x_min) / width, decimal_precision), round((int(current_hand[index][2]*h) - y_min) / height, decimal_precision)))
+                file.write(str(new_poses)[1:-1] + "\n")
 
-                for row in new_poses:
-                    print(row)
-                print()
+                print(new_poses)
 
 
     cv2.imshow("Fuck", img)
     if cv2.waitKey(1) == 27:
         break
+
+file.close()
