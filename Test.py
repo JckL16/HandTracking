@@ -1,11 +1,19 @@
-from csv import writer
-import os
+from keras import *
 
-lista = [1,2,3,4,5,6,7]
+n_features = 10
+model = models.Sequential(name="DeepNN", layers=[
+    ### hidden layer 1
+    layers.Dense(name="h1", input_dim=n_features,
+                 units=int(round((n_features+1)/2)),
+                 activation='relu'),
+    layers.Dropout(name="drop1", rate=0.2),
 
-write_path = "Test.csv"
+    ### hidden layer 2
+    layers.Dense(name="h2", units=int(round((n_features+1)/4)),
+                 activation='relu'),
+    layers.Dropout(name="drop2", rate=0.2),
 
-with open(write_path, "a", newline="") as f:
-    w = writer(f)
-
-    w.writerow(lista)
+    ### layer output
+    layers.Dense(name="output", units=1, activation='sigmoid')
+])
+model.summary()
