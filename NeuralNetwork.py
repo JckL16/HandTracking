@@ -13,32 +13,29 @@ y = dataset.iloc[:, 0].values
 
 
 from sklearn.model_selection import train_test_split
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.1, random_state = 0)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 0)
 
 
 
 
 n_features = X_train.shape[1]
 
+print(X_train.shape)
+print(y_train)
+
 model = models.Sequential(layers=[
     ### hidden layer 1
     layers.Dense(input_dim=n_features,
                  units=int(round((n_features+1)/2)),
-                 activation='relu'),
-    layers.Dropout(name="drop1", rate=0.2),
-
-    ### hidden layer 2
-    layers.Dense(units=int(round((n_features+1)/4)),
-                 activation='relu'),
-    layers.Dropout(name="drop2", rate=0.2),
+                 activation='softmax'),
+    layers.Dropout(rate=0.2),
 
     ### layer output
     layers.Dense(units=1, activation='sigmoid')
 ])
-model.summary()
 
 model.compile(optimizer='adam',
               loss='binary_crossentropy',
               metrics=['accuracy'])
 
-model.fit(X_train, y_train, epochs=100)
+model.fit(X_train, y_train, epochs=1000)
