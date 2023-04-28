@@ -42,8 +42,3 @@ y_pred = (y_pred > 0.5)
 cm = confusion_matrix(y_test, y_pred)
 print(cm)
 accuracy_score(y_test,y_pred)
-
-
-
-
-
