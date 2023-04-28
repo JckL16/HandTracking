@@ -19,7 +19,7 @@ lid={ #Landmark ID
     "MPip": 10,
     "RPip": 14,
     "PPip": 18,
-    
+
 
 }
 
@@ -39,7 +39,7 @@ while True:
             print("Thumbs up")
         else:
             print("NO")'''
-        
+
         # abs(landmarks[0][lid["ITip"]][y] - landmarks[0][lid["IPip"]][y]) > moe
 
         moe = 0.75 #Margin of error
@@ -53,7 +53,7 @@ while True:
         dyM = landmarks[0][lid["MTip"]][y] - landmarks[0][lid["MPip"]][y]
         dxR = landmarks[0][lid["RTip"]][x] - landmarks[0][lid["RPip"]][x]
         dyR = landmarks[0][lid["RTip"]][y] - landmarks[0][lid["RPip"]][y]
-        
+
         states = [
             dyI < 0 and abs(dyI) >= abs(dxI), # index up         [0]
             dyP < 0 and abs(dyP) >= abs(dxP), # pinky up         [1]
@@ -70,7 +70,7 @@ while True:
             dxM < 0 and abs(dyM)/moe < abs(dxM), # middle left   [12]
             dxT > 0 and abs(dyT)/moe < abs(dxT), # thumb right   [13]
             dxT < 0 and abs(dyT)/moe < abs(dxT)  # thumb left    [14]
-            
+
 
         ]
 
@@ -96,7 +96,7 @@ while True:
                 print("pointing")
         elif states[4] and states[:4].count(True) <= 0 and fingers_left + fingers_right == 0:
             print("A")
-        
+
         elif states[4] and fingers_up == 0:
             print("Thumbs up man")
 
@@ -105,7 +105,7 @@ while True:
                 print(fingers_up)
             else:
                 print("Nothing")
-   
+
 
     cv2.imshow("Image", img)
 
