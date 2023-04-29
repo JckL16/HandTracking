@@ -86,10 +86,7 @@ while True:
         ]
 
         fingers_up = states[:4].count(True)
-        fingers_left = states[5:12:2].count(True)
-        fingers_right = states[6:12:2].count(True)
         thumb_in = (landmarks[0][lid["TTip"]][X] - landmarks[0][lid["TPip"]][X])*currenthand < 0
-
 
         if not thumb_in:
             if fingers_up == 4:
