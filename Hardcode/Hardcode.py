@@ -80,7 +80,7 @@ while True:
             dxR > 0 and abs(dyR)/moe < abs(dxR), # ring right    [9]
             dxR < 0 and abs(dyR)/moe < abs(dxR), # ring left     [10]
             dxM > 0 and abs(dyM)/moe < abs(dxM), # middle  right [11]
-            dxM < 0 and abs(dyM)/moe < abs(dxM), # middle left   [12]
+            dxM < 0 and abs(dyM)/moe < abs(dxM)  # middle left   [12]
 
 
         ]
@@ -97,6 +97,8 @@ while True:
             print("Peace")
         elif fingers_up == 0 and thumb_in:
             print("Knytnäve")
+        elif fingers_up == 2 and thumb_in and states[0] and states[1]:
+            print("RockNRoll")
         else:
             print(fingers_up)
 
