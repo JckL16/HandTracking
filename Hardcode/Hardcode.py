@@ -44,10 +44,6 @@ while True:
 
 
         #Tummen upp
-        '''if all(i[Y] >= landmarks[0][lid["TTip"]][Y] for i in (landmarks[0][::4])):
-            print("Thumbs up")
-        else:
-            print("NO")'''
 
         # abs(landmarks[0][lid["ITip"]][Y] - landmarks[0][lid["IPip"]][Y]) > moe
 
