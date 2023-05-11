@@ -56,7 +56,7 @@ while True:
                 print(new_poses)
 
 
-    cv2.imshow("Fuck", img)
+    cv2.imshow("Lol", img)
     if cv2.waitKey(1) == 27:
         break
 

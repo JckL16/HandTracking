@@ -3,6 +3,7 @@ import cv2
 import os
 from csv import writer
 import random
+import time
 
 # Data Format :
 # | Tecken |     Hand     | Landmark 1x | Landmark 1y | Landmark 2x osv
@@ -20,7 +21,7 @@ used_landmarks = [0, 2, 4, 5, 8, 9, 12, 13, 16, 17, 20]
 
 decimal_precision = 7
 
-picture_path = r"F:\SignLanguageDataset\Numbers\Mixed"
+picture_path = r"D:\Trainingdata\fingers\test"
 
 files = os.listdir(picture_path)
 random.shuffle(files)
@@ -33,16 +34,23 @@ if os.path.exists(write_path):
 data_file = open(write_path, "a", newline="")
 writer_object = writer(data_file)
 
-
 for number, file in enumerate(files):
     img = cv2.imread(os.path.join(picture_path, file))
+
+
 
 
     if number == 0:
         h, w, _ = img.shape
 
-    img = detector.findHands(img, draw=False)
+    img = detector.findHands(img)
     landmarks = detector.getPositions()
+
+    print(img.shape)
+
+    time.sleep(1)
+
+
 
     if len(landmarks) != 0:
         for current_hand in landmarks:
@@ -72,6 +80,8 @@ for number, file in enumerate(files):
                     new_poses.append(round((int(current_hand[index][1] * w) - x_min) / width, decimal_precision))
                     new_poses.append(round((int(current_hand[index][2] * h) - y_min) / height, decimal_precision))
 
+
+                print(new_poses)
                 writer_object.writerow(new_poses)
 
                 print(f"{number} / {total_files} - {round(number/total_files * 100, 2)}%")
