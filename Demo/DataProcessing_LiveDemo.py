@@ -37,12 +37,18 @@ writer_object = writer(data_file)
 
 h, w, _ = cv2.imread(os.path.join(picture_path, files[0])).shape
 
+bounding_offset = 10
+
 
 for number, file in enumerate(files):
     img = cv2.imread(os.path.join(picture_path, file))
+    img = cv2.resize(img, (w*3, h*3))
 
-    img = detector.findHands(img, draw=False)
+
+    img = detector.findHands(img)
     landmarks = detector.getPositions()
+
+    cv2.putText(img=img, text=file[-6], org=(15, 40), fontFace=cv2.FONT_HERSHEY_TRIPLEX, fontScale=1, color=(255, 255, 255),thickness=2)
 
     if len(landmarks) != 0:
         for current_hand in landmarks:
@@ -73,6 +79,16 @@ for number, file in enumerate(files):
                     new_poses.append(round((int(current_hand[index][2] * h) - y_min) / height, decimal_precision))
 
 
+                print(new_poses)
                 writer_object.writerow(new_poses)
 
                 print(f"{number} / {total_files} - {round(number/total_files * 100, 2)}%")
+
+                cv2.rectangle(img, (x_min*3 - bounding_offset, y_min*3 - bounding_offset),
+                                   (x_max*3 + bounding_offset, y_max*3 + bounding_offset), (0,100,0), 2)
+
+                cv2.imshow("Image", img)
+
+                cv2.waitKey(27)
+
+                time.sleep(0.5)

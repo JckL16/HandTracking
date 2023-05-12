@@ -28,21 +28,26 @@ random.shuffle(files)
 total_files = len(files)
 
 
-write_path = "Data.csv"
-if os.path.exists(write_path):
-    os.remove(write_path)
-data_file = open(write_path, "a", newline="")
-writer_object = writer(data_file)
-
-
 h, w, _ = cv2.imread(os.path.join(picture_path, files[0])).shape
 
+bounding_offset = 10
 
-for number, file in enumerate(files):
+frame_rate = 24
+tpi = 2.5 # time per image
+
+img_list = []
+
+number_of_images = 30
+
+for number, file in enumerate(files[:number_of_images]):
     img = cv2.imread(os.path.join(picture_path, file))
+    img = cv2.resize(img, (w*3, h*3))
 
-    img = detector.findHands(img, draw=False)
+
+    img = detector.findHands(img)
     landmarks = detector.getPositions()
+
+    cv2.putText(img=img, text=file[-6], org=(15, 40), fontFace=cv2.FONT_HERSHEY_TRIPLEX, fontScale=1, color=(255, 255, 255),thickness=2)
 
     if len(landmarks) != 0:
         for current_hand in landmarks:
@@ -60,19 +65,20 @@ for number, file in enumerate(files):
                     if y < y_min:
                         y_min = y
 
-                width, height = x_max - x_min, y_max - y_min
+                cv2.rectangle(img, (x_min*3 - bounding_offset, y_min*3 - bounding_offset),
+                                   (x_max*3 + bounding_offset, y_max*3 + bounding_offset), (0,100,0), 2)
 
-                # print(round((int(current_hand[0][1] * w) - x_min) / width, decimal_precision), round((int(current_hand[0][2]*h) - y_min) / height, decimal_precision))
-                # print()
-
-                new_poses = [file[-6], hands[file[-5]]]
-
-                for index in used_landmarks:
-                    # new_poses.append([index, round((int(current_hand[index][1] * w) - x_min) / width, decimal_precision), round((int(current_hand[index][2]*h) - y_min) / height, decimal_precision)])
-                    new_poses.append(round((int(current_hand[index][1] * w) - x_min) / width, decimal_precision))
-                    new_poses.append(round((int(current_hand[index][2] * h) - y_min) / height, decimal_precision))
+                cv2.imshow("Image", img)
+                cv2.waitKey(27)
+                time.sleep(0.1)
+                print(number)
+                # for i in range(int(frame_rate * tpi)):
+                img_list.append(img)
 
 
-                writer_object.writerow(new_poses)
+video = cv2.VideoWriter("Demo.mp4", cv2.VideoWriter_fourcc(*'mp4v'), frame_rate, (w,h))
 
-                print(f"{number} / {total_files} - {round(number/total_files * 100, 2)}%")
+for img in img_list:
+    video.write(img)
+
+video.release()
