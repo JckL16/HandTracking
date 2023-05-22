@@ -2,7 +2,7 @@ import Module as m
 import cv2
 import math
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(1)
 detector = m.handDetector()
 
 lid={ #Landmark ID
