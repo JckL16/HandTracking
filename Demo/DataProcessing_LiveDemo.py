@@ -22,7 +22,7 @@ used_landmarks = [0, 2, 4, 5, 8, 9, 12, 13, 16, 17, 20]
 decimal_precision = 10
 
 picture_path = r"D:\SignLanguageDataset\Numbers\Mixed"
-
+    
 files = os.listdir(picture_path)
 random.shuffle(files)
 total_files = len(files)
