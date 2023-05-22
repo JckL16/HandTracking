@@ -75,28 +75,41 @@ while True:
             dxP < 0 and abs(dyP)/moe < abs(dxP), # pinky left    [8]
             dxR > 0 and abs(dyR)/moe < abs(dxR), # ring right    [9]
             dxR < 0 and abs(dyR)/moe < abs(dxR), # ring left     [10]
-            dxM > 0 and abs(dyM)/moe < abs(dxM), # middle  right [11]
-            dxM < 0 and abs(dyM)/moe < abs(dxM)  # middle left   [12]
+            dxM > 0 and abs(dyM)/moe < abs(dxM), # middle right [11]
+            dxM < 0 and abs(dyM)/moe < abs(dxM),  # middle left   [12]
+            dyT > 0 and abs(dyT)*0.5 <= abs(dxT), # thumb down     [13]
 
 
         ]
 
+        result = None
+
+        fingers_right = states[5:12:2].count(True)
+        fingers_left =  states[6:12:2].count(True)
+
         fingers_up = states[:4].count(True)
         thumb_in = (landmarks[0][lid["TTip"]][X] - landmarks[0][lid["TPip"]][X])*currenthand < 0
 
-        if not thumb_in:
-            if fingers_up == 4:
-                print("High five")
-            else:
-                print(fingers_up + 1)
-        elif fingers_up == 2 and states[0] and states[3]:
-            print("Peace")
-        elif fingers_up == 0 and thumb_in:
-            print("Knytnäve")
+
+
+        if fingers_up == 0:
+            if states[4]:
+                if (currenthand == 1 and fingers_left == 0) or (currenthand == -1 and fingers_right == 0):
+                    result = "Thumbs up"
+            elif states[13]:
+                if (currenthand == 1 and fingers_left == 0) or (currenthand == -1 and fingers_right == 0):
+                    result = "Thumbs down"
+        elif states[3] and fingers_up == 1:
+            result = "Inte passande"
+        elif not thumb_in:
+            result = str(fingers_up + 1)
         elif fingers_up == 2 and thumb_in and states[0] and states[1]:
-            print("RockNRoll")
+            result = "RockNRoll"
         else:
-            print(fingers_up)
+            result = str(fingers_up)
+
+
+        cv2.putText(img=img, text=result, org=(20, 70), fontFace=cv2.FONT_HERSHEY_TRIPLEX, fontScale=2, color=(0, 0, 0),thickness=2)
 
 
     cv2.imshow("Image", img)
