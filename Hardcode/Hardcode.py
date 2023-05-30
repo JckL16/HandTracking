@@ -91,13 +91,14 @@ while True:
         thumb_in = (landmarks[0][lid["TTip"]][X] - landmarks[0][lid["TPip"]][X])*currenthand < 0
 
 
-
+        if thumb_in and fingers_up == 0:
+            result = "0"
         if fingers_up == 0:
             if states[4]:
-                if (currenthand == 1 and fingers_left == 0) or (currenthand == -1 and fingers_right == 0):
+                if (currenthand == 1 and fingers_left == 0 and fingers_right != 0) or (currenthand == -1 and fingers_right == 0 and fingers_left != 0):
                     result = "Thumbs up"
             elif states[13]:
-                if (currenthand == 1 and fingers_left == 0) or (currenthand == -1 and fingers_right == 0):
+                if (currenthand == 1 and fingers_left == 0 and fingers_right != 0) or (currenthand == -1 and fingers_right == 0 and fingers_left != 0):
                     result = "Thumbs down"
         elif states[3] and fingers_up == 1:
             result = "Inte passande"
